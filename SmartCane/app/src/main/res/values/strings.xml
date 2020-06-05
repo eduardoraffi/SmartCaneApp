@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">SmartCane</string>
+
+    <!-- INTRO ACTIVITY -->
+    <string name="intro_next">próximo</string>
+    <string name="intro_skip">pular</string>
+    <string name="intro_finish">terminar</string>
+
+    <string name="intro_header1">Com SmartCane você pode mais!</string>
+    <string name="intro_header2">Por que inseparável?</string>
+    <string name="intro_header3">Vamos lá!</string>
+    <string name="intro_descritption1">Parabéns por adiquirir seu novo inseparável acessório. Com Smart Cane você poderá caminhar tranquilamente por onde quiser</string>
+    <string name="intro_descritption2">A smart cane conta com sensores que irão enviar informações para seu celular via Bluetooth para que você seja alertado de possíveis obstáculos que uma bengala comum não consegue.</string>
+    <string name="intro_descritption3">Ao fim deste texto, você será direcionado a página com as funcionalidades de sua bengala, onde você poderá ativar ou desativar a instrução de cada botão sempre que precisar! Por padrão as descrições vem habilitadas para que você entenda o que cada botão faz.</string>
+
+    <!-- SMART FUNCTIONS ACTIVITY -->
+</resources>

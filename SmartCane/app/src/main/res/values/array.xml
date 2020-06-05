@@ -1,0 +1,20 @@
+<resources>
+        <string-array name="nearbyLocalesForMap">
+            <item>airport</item>
+            <item>atm</item>
+            <item>bank</item>
+            <item>bus_station</item>
+            <item>church</item>
+            <item>hospital</item>
+            <item>restaurant</item>
+        </string-array>
+        <string-array name="nearbyLocales">
+            <item>Aeroporto</item>
+            <item>Caixa de banco</item>
+            <item>Banco</item>
+            <item>Ponto de ônibus</item>
+            <item>Igreja</item>
+            <item>Hospital</item>
+            <item>Restaurante</item>
+        </string-array>
+</resources>

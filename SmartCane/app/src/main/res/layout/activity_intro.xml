@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_intro"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    tools:context=".intro.activity.IntroActivity">
+
+    <androidx.viewpager.widget.ViewPager
+        android:focusable="false"
+        android:id="@+id/vp_intro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_dots"
+        android:focusable="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btn_skip_intro"
+        android:nextFocusRight="@id/btn_next_intro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="12dp"
+        android:textStyle="bold"
+        android:textColor="@color/darkBlue"/>
+
+    <Button
+        android:id="@+id/btn_next_intro"
+        android:nextFocusLeft="@id/btn_skip_intro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="12dp"
+        android:textStyle="bold"
+        android:textColor="@color/darkBlue"/>
+
+</RelativeLayout>

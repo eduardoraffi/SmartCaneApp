@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".smart_functions.activity.SmartFunctionsActivity">
+
+    <TextView
+        android:id="@+id/tv_connection_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:text="Desconectado. Aperte em Sincronizar bengala"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+    <TextView
+        android:id="@+id/tv_distance"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:text="120"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
+    <ScrollView
+        android:layout_below="@+id/tv_connection_state"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="32dp"
+        android:layout_marginLeft="32dp">
+        <LinearLayout
+            android:id="@+id/ll_action_buttons"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_sync_cane"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sincronizar bengala"/>
+
+            <Button
+                android:id="@+id/btn_talk_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Onde estou?" />
+
+            <Button
+                android:id="@+id/btn_open_map"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ir para casa" />
+
+            <Button
+                android:id="@+id/btn_arround_me"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mostrar lugares próximos"/>
+
+            <Button
+                android:id="@+id/btn_send_sms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enviar sms de emergência"/>
+
+            <Button
+                android:layout_marginTop="32dp"
+                android:id="@+id/btn_height_redefinition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mudar informações cadastradas"/>
+
+            <Button
+                android:id="@+id/btn_configure_my_locations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Configurar locais próximos"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginTop="32dp"
+        android:textSize="20sp"
+        android:text="Clique no item para abrir no mapa."/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_nearby"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_title"
+        android:layout_margin="32dp"/>
+
+
+</RelativeLayout>
