@@ -54,7 +54,7 @@ public class InitialRegisterActivity extends BaseActivity {
             getSupportActionBar().setElevation(10);
             View view = getSupportActionBar().getCustomView();
             TextView tv = view.findViewById(R.id.tv_actionbar_label);
-            tv.setText("Informações pessoais");
+            tv.setText(getString(R.string.ir_title1));
             ImageView iv = view.findViewById(R.id.iv_back);
 
             iv.setOnClickListener(v -> finish());
@@ -70,13 +70,13 @@ public class InitialRegisterActivity extends BaseActivity {
         Button continueButton = findViewById(R.id.btn_continue);
         if (getIntent().getBooleanExtra(INITIAL_REGISTER_CONSTANTS_SP_FROM_SFA, false)) {
             TextView tv_title = findViewById(R.id.tv_title);
-            tv_title.setText("Aqui você pode edita-las");
-            continueButton.setText("Salvar");
+            tv_title.setText(R.string.ir_title2);
+            continueButton.setText(R.string.save_text);
             continueButton.setOnClickListener(v -> {
                 if (saveFields())
                     finish();
             });
-        }else {
+        } else {
 
             continueButton.setOnClickListener(v -> {
                 if (saveFields())
@@ -107,6 +107,7 @@ public class InitialRegisterActivity extends BaseActivity {
         return true;
     }
 
+    @SuppressLint("InflateParams")
     private void addListViewItem() {
         LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         assert li != null;
@@ -121,11 +122,11 @@ public class InitialRegisterActivity extends BaseActivity {
         TextView tv3 = view3.findViewById(R.id.tv_initial_register);
         EditText et3 = view3.findViewById(R.id.et_initial_register);
 
-        tv1.setText("Digite sua altura: (Em centímetros)");
+        tv1.setText(getString(R.string.ir_type_height));
         et1.setInputType(InputType.TYPE_CLASS_NUMBER);
-        tv2.setText("Telefone para enviar SMS de emergência:");
+        tv2.setText(getString(R.string.ir_type_phone_number));
         et2.setInputType(InputType.TYPE_CLASS_NUMBER);
-        tv3.setText("Digite seu endereço:");
+        tv3.setText(getString(R.string.ir_type_address));
         et3.setInputType(InputType.TYPE_TEXT_VARIATION_POSTAL_ADDRESS);
 
         String s1 = mSharedPreferences.getString(INITIAL_REGISTER_CONSTANTS_SP_USER_HEIGHT, "");

@@ -19,7 +19,6 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.telephony.SmsManager;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -44,7 +43,6 @@ import com.example.smartcane.smart_functions.nearby_locations.NearbyActivity;
 import com.example.smartcane.utils.BaseActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
@@ -68,7 +66,6 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
     private SharedPreferences mSharedPreferences;
 
     private TextView tv_connection_state;
-    private TextView tv_distance;
     private Button btn_sync_cane;
     private Button btn_open_map;
     private Button btn_send_sms;
@@ -108,10 +105,10 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
     protected void onResume() {
         super.onResume();
         if (connected == Connected.False) {
-            tv_connection_state.setText("Desconectado. Aperte em Sincronizar bengala.");
+            tv_connection_state.setText(getString(R.string.sf_disconnected_device));
             connectionDialog();
         } else {
-            tv_connection_state.setText("Bengala Conectada.");
+            tv_connection_state.setText(getString(R.string.sf_connected_device));
         }
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this)
@@ -123,11 +120,11 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
     }
 
     private void connectionDialog() {
-        new AlertDialog.Builder(mContext).setTitle("Bengala Desconectada")
-                .setMessage("Conecte-se em sua bengala.")
-                .setPositiveButton("Sim", (dialog, which) -> {
+        new AlertDialog.Builder(mContext).setTitle(getString(R.string.sf_disconnected_device_dialog_title))
+                .setMessage(getString(R.string.sf_disconnected_device_dialog_message))
+                .setPositiveButton(getString(R.string.common_yes), (dialog, which) -> {
                     connect();
-                }).setNegativeButton("Agora não", (dialog, which) -> {
+                }).setNegativeButton(getString(R.string.common_not_now), (dialog, which) -> {
             dialog.dismiss();
         }).create().show();
     }
@@ -163,7 +160,6 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
         mContext = this;
 
         tv_connection_state = findViewById(R.id.tv_connection_state);
-        tv_distance = findViewById(R.id.tv_distance);
         btn_sync_cane = findViewById(R.id.btn_sync_cane);
         btn_open_map = findViewById(R.id.btn_open_map);
         btn_send_sms = findViewById(R.id.btn_send_sms);
@@ -193,14 +189,11 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
     }
 
     private void setupButtonClicks() {
-        btn_sync_cane.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (connected == Connected.False) {
-                    syncCane();
-                } else
-                    Toast.makeText(mContext, "Bengala já está conectada, aproveite.", Toast.LENGTH_SHORT).show();
-            }
+        btn_sync_cane.setOnClickListener(v -> {
+            if (connected == Connected.False) {
+                syncCane();
+            } else
+                Toast.makeText(mContext, getString(R.string.sf_already_connected_device), Toast.LENGTH_SHORT).show();
         });
 
         btn_open_map.setOnClickListener(v -> openMap());
@@ -252,6 +245,7 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
         showProgressDialog();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         LocationRequest mLocationRequest = LocationRequest.create();
@@ -260,12 +254,9 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
         if (mLocation == null) {
             mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         }
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                if (location != null) {
-                    mLocation = location;
-                }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, location -> {
+            if (location != null) {
+                mLocation = location;
             }
         });
     }
@@ -292,7 +283,7 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
     private void openMap() {
         String uri = "geo:0,0?q=+" + mSharedPreferences.getString(INITIAL_REGISTER_CONSTANTS_SP_USER_ADDRESS, "");
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-        Intent chooser = Intent.createChooser(intent, "Escolha o mapa preferido");
+        Intent chooser = Intent.createChooser(intent, getString(R.string.favorite_map));
         startActivity(chooser);
     }
 
@@ -307,7 +298,7 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
             try {
                 SmsManager smsMgrVar = SmsManager.getDefault();
                 smsMgrVar.sendTextMessage(number, null, messageToSend, sentPI, null);
-                showAlertDialog("Mensagem enviada", "Que a força esteja com você!");
+                showAlertDialog(getString(R.string.sf_message_sent_dialog_title), getString(R.string.sf_message_sent_dialog_message));
 
             } catch (Exception ErrVar) {
                 ErrVar.printStackTrace();
@@ -333,13 +324,13 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
                 e.printStackTrace();
             }
         }
-        return "Não foi possível encontrar sua localização";
+        return getString(R.string.sf_unknown_location);
     }
 
     private void talkObjectDistance(String message) {
         if (!textToSpeech.isSpeaking()) {
             try {
-                textToSpeech.setLanguage(new Locale("pt_BR"));
+                textToSpeech.setLanguage(new Locale(getString(R.string.sf_default_location)));
 
                 Bundle bundle = new Bundle();
                 bundle.putInt(TextToSpeech.Engine.KEY_PARAM_STREAM, AudioManager.STREAM_MUSIC);
@@ -354,7 +345,7 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
 
     private void talkLocation(String message) {
         try {
-            textToSpeech.setLanguage(new Locale("pt_BR"));
+            textToSpeech.setLanguage(new Locale(getString(R.string.sf_default_location)));
 
             Bundle bundle = new Bundle();
             bundle.putInt(TextToSpeech.Engine.KEY_PARAM_STREAM, AudioManager.STREAM_MUSIC);
@@ -396,12 +387,12 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
         service.disconnect();
         socket.disconnect();
         socket = null;
-        tv_connection_state.setText("Dispositivo Desconectado");
+        tv_connection_state.setText(getString(R.string.sf_disconnected_device));
     }
 
     private void send(String userHeight) {
         if (connected != Connected.True) {
-            showAlertDialog("Dispositivo Desconectado", "Não foi possível conectar em sua Smart Cane.");
+            showAlertDialog(getString(R.string.sf_disconnected_dialog_title), getString(R.string.sf_disconnected_dialog_message));
             return;
         }
         try {
@@ -412,6 +403,7 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void receive(byte[] data) {
         String receivedData = new String(data);
         System.out.println(receivedData);
@@ -422,9 +414,10 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
         } else {
             try {
                 Integer.parseInt(receivedData);
-                tv_distance.setText(receivedData + " CM");
-                talkObjectDistance("Objeto a " + receivedData + "centímetros de sua mão");
+                String speechText = getString(R.string.sf_object_distance_initial) + receivedData + getString(R.string.sf_object_distance_final);
+                talkObjectDistance(speechText);
             } catch (NumberFormatException e) {
+                //bug prevent
                 if (receivedData.equals("a")) {
                     talkLocation(localeString());
                 } else if (receivedData.equals("b")) {
@@ -432,7 +425,6 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
                 }
             }
         }
-
     }
 
     private void status(String str) {
@@ -442,28 +434,24 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
     private void showAlertDialog(String title, String message) {
         new AlertDialog.Builder(mContext).setTitle(title)
                 .setMessage(message)
-                .setPositiveButton("Ok", (dialog, which) -> {
+                .setPositiveButton(getString(R.string.common_ok), (dialog, which) -> {
                     dialog.dismiss();
                 }).create().show();
     }
 
-    /*
-     * SerialListener
-     */
     @Override
     public void onSerialConnect() {
         status("connected");
         connected = Connected.True;
         send(mSharedPreferences.getString(INITIAL_REGISTER_CONSTANTS_SP_USER_HEIGHT, "160"));
-        tv_connection_state.setText("Conectado");
+        tv_connection_state.setText(getString(R.string.sf_connected));
     }
 
     @Override
     public void onSerialConnectError(Exception e) {
-        status("connection failed: " + e.getMessage());
+        status(getString(R.string.sf_connection_failure));
         disconnect();
-        showAlertDialog("Dispositivo Desconectado", "Não foi possível conectar em sua Smart Cane.");
-        tv_connection_state.setText("Desconectado. Aperte em Sincronizar bengala");
+        showAlertDialog(getString(R.string.sf_disconnected_dialog_title), getString(R.string.sf_disconnected_dialog_message));
         connected = Connected.False;
     }
 
@@ -474,9 +462,8 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
 
     @Override
     public void onSerialIoError(Exception e) {
-        status("connection lost: " + e.getMessage());
-        tv_connection_state.setText("Desconectado. Aperte em Sincronizar bengala");
-        showAlertDialog("Dispositivo Desconectado", "Não foi possível conectar em sua Smart Cane.");
+        status(getString(R.string.sf_connection_failure));
+        showAlertDialog(getString(R.string.sf_disconnected_dialog_title), getString(R.string.sf_disconnected_dialog_message));
         disconnect();
         connected = Connected.False;
     }

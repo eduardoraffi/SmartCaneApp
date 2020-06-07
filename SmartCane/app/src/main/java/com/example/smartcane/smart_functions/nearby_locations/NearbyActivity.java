@@ -25,6 +25,7 @@ public class NearbyActivity extends AppCompatActivity {
 
     private ArrayList<GooglePlace> mPlacesArray;
 
+    @SuppressWarnings("unchecked")
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class NearbyActivity extends AppCompatActivity {
         getSupportActionBar().setElevation(10);
         View view = getSupportActionBar().getCustomView();
         TextView tv = view.findViewById(R.id.tv_actionbar_label);
-        tv.setText("Lugares próximos");
+        tv.setText(getString(R.string.nearby_title));
         ImageView iv = view.findViewById(R.id.iv_back);
 
         iv.setOnClickListener(v -> finish());
@@ -51,7 +52,7 @@ public class NearbyActivity extends AppCompatActivity {
         mAdapter.setOnItemClickListener(position -> {
             String uri = "geo:0,0?q=+" + mPlacesArray.get(position).getVicinity();
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-            Intent chooser = Intent.createChooser(intent, "Escolha o mapa preferido");
+            Intent chooser = Intent.createChooser(intent, getString(R.string.favorite_map));
             startActivity(chooser);
         });
         mRecyclerView.setAdapter(mAdapter);

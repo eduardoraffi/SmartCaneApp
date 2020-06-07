@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -22,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.smartcane.R;
 import com.example.smartcane.state.StateActivity;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 import static com.example.smartcane.state.StateConstants.STATE_CONSTANTS_SP_NAME;
@@ -54,7 +52,7 @@ public class LocationPreferencesActivity extends AppCompatActivity {
         getSupportActionBar().setElevation(10);
         View view = getSupportActionBar().getCustomView();
         TextView tv = view.findViewById(R.id.tv_actionbar_label);
-        tv.setText("Preferências");
+        tv.setText(getString(R.string.lp_preferences));
         ImageView iv = view.findViewById(R.id.iv_back);
 
         iv.setOnClickListener(v -> finish());
@@ -71,15 +69,16 @@ public class LocationPreferencesActivity extends AppCompatActivity {
         } else button.setVisibility(View.GONE);
     }
 
+    @SuppressLint("InflateParams")
     private void populateLayout() {
 
         String[] locales = getResources().getStringArray(R.array.nearbyLocales);
         String[] localesMap = getResources().getStringArray(R.array.nearbyLocalesForMap);
-        ArrayList<View> mViews = new ArrayList<>();
 
         for (int i = 0; i < locales.length; i++) {
             int pos = i;
             LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            assert vi != null;
             View view = vi.inflate(R.layout.location_preference_item, null);
 
             TextView tv = view.findViewById(R.id.tv_location_type);
@@ -92,18 +91,12 @@ public class LocationPreferencesActivity extends AppCompatActivity {
 
             tv.setText(locales[i]);
             sw.setChecked(mSharedPreferences.getBoolean(locales[i], false));
-            sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    mSharedPreferences.edit().putBoolean(locales[pos], isChecked).apply();
-                    if (isChecked) {
-                        mSharedPreferences.edit().putString(localesMap[pos], localesMap[pos]).apply();
-                    } else mSharedPreferences.edit().putString(localesMap[pos], "").apply();
-                }
+            sw.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                mSharedPreferences.edit().putBoolean(locales[pos], isChecked).apply();
+                if (isChecked) {
+                    mSharedPreferences.edit().putString(localesMap[pos], localesMap[pos]).apply();
+                } else mSharedPreferences.edit().putString(localesMap[pos], "").apply();
             });
-
-            //this array will save all views created using types from google response (every request)
-            mViews.add(view);
 
             ll_location_type.addView(view);
         }

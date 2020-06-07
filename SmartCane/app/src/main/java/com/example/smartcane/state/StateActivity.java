@@ -15,15 +15,17 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.smartcane.R;
+import com.example.smartcane.bluetooth_connection.activity.BluetoothActivity;
 import com.example.smartcane.initial_register.InitialRegisterActivity;
 import com.example.smartcane.intro.activity.IntroActivity;
 import com.example.smartcane.smart_functions.activity.SmartFunctionsActivity;
-import com.example.smartcane.bluetooth_connection.activity.BluetoothActivity;
 import com.example.smartcane.smart_functions.location_preferences.LocationPreferencesActivity;
 
 import java.util.Objects;
 
-import static com.example.smartcane.state.StateConstants.*;
+import static com.example.smartcane.state.StateConstants.STATE_CONSTANTS_SP_NAME;
+import static com.example.smartcane.state.StateConstants.STATE_CONSTANTS_SP_SHOW_LOCALE_PREFERENCES;
+import static com.example.smartcane.state.StateConstants.STATE_CONSTANTS_STORAGE_PERMISSION_CODE;
 
 public class StateActivity extends AppCompatActivity {
 
@@ -63,12 +65,9 @@ public class StateActivity extends AppCompatActivity {
     }
 
     private boolean checkAcceptedPermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
-                == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        }
-        return false;
+                == PackageManager.PERMISSION_GRANTED;
     }
 
     private void askForPermissions(String permission) {
@@ -77,13 +76,13 @@ public class StateActivity extends AppCompatActivity {
                 permission)) {
             new AlertDialog.Builder(this)
                     .setTitle("Permissões de " + ((permission.equals(Manifest.permission.SEND_SMS)) ? "SMS" : "Localização") + " necessárias")
-                    .setMessage("As permissões são necessárias para o funcionamento correto do aplicativo. Não enviamos seus dados para locais externos.")
-                    .setPositiveButton("OK", (dialog, which) -> {
+                    .setMessage(getString(R.string.state_permissions_message))
+                    .setPositiveButton(getString(R.string.common_ok), (dialog, which) -> {
                         ActivityCompat.requestPermissions(StateActivity.this,
                                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STATE_CONSTANTS_STORAGE_PERMISSION_CODE);
                         runApp();
                     })
-                    .setNegativeButton("FECHAR", (dialog, which) -> {
+                    .setNegativeButton(getString(R.string.common_close), (dialog, which) -> {
                         dialog.dismiss();
                         runApp();
                     })

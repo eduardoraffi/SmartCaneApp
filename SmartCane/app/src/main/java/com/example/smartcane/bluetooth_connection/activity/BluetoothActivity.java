@@ -22,7 +22,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.smartcane.R;
 import com.example.smartcane.smart_functions.SmartFunctionsConstants;
-import com.example.smartcane.smart_functions.activity.SmartFunctionsActivity;
 import com.example.smartcane.state.StateActivity;
 
 import java.util.ArrayList;
@@ -35,7 +34,6 @@ public class BluetoothActivity extends AppCompatActivity {
 
     private SharedPreferences mSharedPreferences;
 
-    public static final String DEVICE = "device";
     private LinearLayout linearLayout;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Context mContext;
@@ -75,6 +73,7 @@ public class BluetoothActivity extends AppCompatActivity {
         configure();
     }
 
+    @SuppressWarnings("deprecation")
     private void configure() {
         listItems.clear();
         if ((linearLayout).getChildCount() > 0)
@@ -96,6 +95,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("InflateParams")
     private View addListViewItem(BluetoothDevice device) {
         LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         assert li != null;
@@ -108,18 +108,18 @@ public class BluetoothActivity extends AppCompatActivity {
         tv2.setText(device.getAddress());
 
         view.setOnClickListener(v -> {
-            if (device.getName().equals("SmartCane")) {
+            if (device.getName().equals(getString(R.string.cane_name))) {
                 mSharedPreferences.edit().putString(SmartFunctionsConstants.SMART_FUNCTION_SP_BLUETOOTH_NAME, device.getName()).apply();
                 mSharedPreferences.edit().putString(SmartFunctionsConstants.SMART_FUNCTION_SP_BLUETOOTH_ADDRESS, device.getAddress()).apply();
                 mSharedPreferences.edit().putBoolean(STATE_CONSTANTS_SP_SHOW_BLUETOOTH_LIST, false).apply();
                 Intent intent = new Intent(mContext, StateActivity.class);
                 startActivity(intent);
             } else {
-                new AlertDialog.Builder(mContext).setTitle("Ir para configurações")
-                        .setMessage("Pareie sua bengala nas configurações de bluetooth antes de seguir.")
-                        .setPositiveButton("Ir", (dialog, which) -> {
+                new AlertDialog.Builder(mContext).setTitle(getString(R.string.bta_goto_configs))
+                        .setMessage(getString(R.string.bta_dialog_message))
+                        .setPositiveButton(getString(R.string.btn_go), (dialog, which) -> {
                             goToBluetoothSettings();
-                        }).setNegativeButton("Agora não", (dialog, which) -> {
+                        }).setNegativeButton(getString(R.string.common_not_now), (dialog, which) -> {
                     dialog.dismiss();
                 }).create().show();
             }

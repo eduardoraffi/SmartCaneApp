@@ -13,15 +13,6 @@
         android:text="Desconectado. Aperte em Sincronizar bengala"
         android:textAlignment="center"
         android:textSize="18sp" />
-    <TextView
-        android:id="@+id/tv_distance"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="32dp"
-        android:text="120"
-        android:textAlignment="center"
-        android:textSize="18sp" />
 
     <ScrollView
         android:layout_below="@+id/tv_connection_state"

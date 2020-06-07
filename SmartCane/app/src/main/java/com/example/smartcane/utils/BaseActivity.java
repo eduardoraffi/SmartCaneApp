@@ -2,7 +2,6 @@ package com.example.smartcane.utils;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -26,13 +25,13 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void showProgressDialog() {
-        if(!mDialog.isShowing()){
+        if (!mDialog.isShowing()) {
             mDialog.show();
         }
     }
 
     public void dismissProgressDialog() {
-        if(mDialog != null && mDialog.isShowing()){
+        if (mDialog != null && mDialog.isShowing()) {
             mDialog.cancel();
         }
     }

@@ -33,14 +33,10 @@ public class GooglePlaces extends AsyncTask<Context, String, ArrayList> {
 
     @Override
     protected ArrayList doInBackground(Context... context) {
-        // make Call to the url
-        System.out.println(mUrlString);
         for (String url : mUrlString) {
-            makeCall(url, context[0]);
+            makeCall(url);
         }
         return mArrayList;
-
-        //print the call in the console
     }
 
     @Override
@@ -53,7 +49,7 @@ public class GooglePlaces extends AsyncTask<Context, String, ArrayList> {
         mAsyncResponse.processFinish(result);
     }
 
-    private void makeCall(String stringUrl, Context context) {
+    private void makeCall(String stringUrl) {
         URL url;
         StringBuilder jsonResults = new StringBuilder();
         HttpURLConnection urlConnection = null;

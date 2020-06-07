@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">SmartCane</string>
+    <!-- COMMONS -->
+    <string name="cane_name">@string/app_name</string>
+    <string name="save_text">Salvar</string>
+    <string name="btn_go">Ir</string>
+    <string name="common_not_now">Agora não</string>
+    <string name="favorite_map">Escolha o mapa preferido</string>
+    <string name="common_ok">OK</string>
+    <string name="common_yes">Sim</string>
+    <string name="common_no">Não</string>
+    <string name="common_close">FECHAR</string>
+
+    <!-- STATE ACTIVITY -->
+    <string name="state_permissions_message">As permissões são necessárias para o funcionamento correto do aplicativo. Não enviamos seus dados para locais externos.</string>
+
 
     <!-- INTRO ACTIVITY -->
     <string name="intro_next">próximo</string>
@@ -10,8 +24,41 @@
     <string name="intro_header2">Por que inseparável?</string>
     <string name="intro_header3">Vamos lá!</string>
     <string name="intro_descritption1">Parabéns por adiquirir seu novo inseparável acessório. Com Smart Cane você poderá caminhar tranquilamente por onde quiser</string>
-    <string name="intro_descritption2">A smart cane conta com sensores que irão enviar informações para seu celular via Bluetooth para que você seja alertado de possíveis obstáculos que uma bengala comum não consegue.</string>
-    <string name="intro_descritption3">Ao fim deste texto, você será direcionado a página com as funcionalidades de sua bengala, onde você poderá ativar ou desativar a instrução de cada botão sempre que precisar! Por padrão as descrições vem habilitadas para que você entenda o que cada botão faz.</string>
+    <string name="intro_descritption2">Em sua bengala existe um sensor de distância para te ajudar com objetos próximos a sua cabeça e dois botões!\nBotão 1: Ao aperta-lo você ouvirá sua localização atual\nBotão 2: Ao aperta-lo enviará um SMS de emergencia para o telefone cadastrado.</string>
+    <string name="intro_descritption3">A próxima tela será onde você irá se conectar a sua bengala! Após a conexão (via bluetooth) você será direcionado para uma tela de cadastro de endereço, telefone de alguém de confiaça para te ajudar caso esteja em apuros e sua altura - para que seja possível calcular a distância que o sensor irá te avisar quando houver objetos próximos a sua cabeça. E por fim, poderá selecionar os locais que deseja saber que estão próximos de sua localização (Resutaurantes, hospitais e etc)</string>
+
+    <!-- INITIAL REGISTER ACTIVITY -->
+    <string name="ir_title1">Informações pessoais</string>
+    <string name="ir_title2">Aqui você pode edita-las</string>
+    <string name="ir_type_height">Digite sua altura: (Em centímetros)</string>
+    <string name="ir_type_phone_number">"Telefone para enviar SMS de emergência:"</string>
+    <string name="ir_type_address">Digite seu endereço:</string>
+
+    <!-- BLUETOOTH ACTIVITY -->
+    <string name="bta_goto_configs">Ir para configurações</string>
+    <string name="bta_dialog_message">Pareie sua bengala nas configurações de bluetooth antes de seguir</string>
+
+    <!-- LOCATION PREFERENCES ACTIVITY -->
+    <string name="lp_preferences">Preferências</string>
+
+    <!-- NEARBY ACTIVITY -->
+    <string name="nearby_title">Lugares próximos</string>
 
     <!-- SMART FUNCTIONS ACTIVITY -->
+    <string name="sf_disconnected_device">Desconectado. Aperte em Sincronizar bengala.</string>
+    <string name="sf_disconnected_device_dialog_title">Bengala Desconectada.</string>
+    <string name="sf_disconnected_device_dialog_message">Conecte-se em sua bengala.</string>
+    <string name="sf_connected_device">Bengala Conectada.</string>
+    <string name="sf_already_connected_device">Bengala já está conectada.</string>
+    <string name="sf_message_sent_dialog_title">Mensagem enviada</string>
+    <string name="sf_message_sent_dialog_message">Que a força esteja com você!</string>
+    <string name="sf_unknown_location">Localização indisponível</string>
+    <string name="sf_default_location">pt_BR</string>
+    <string name="sf_disconnected_dialog_title">SmartCane desconectada</string>
+    <string name="sf_disconnected_dialog_message">Não foi possível conectar em sua SmartCane</string>
+    <string name="sf_object_distance_initial">Objeto a </string>
+    <string name="sf_object_distance_final">centímetros de sua mão.</string>
+    <string name="sf_connection_failure">Falha de conexão. Sua SmpartCane está ligada?</string>
+    <string name="sf_connected">Conectado</string>
+
 </resources>
