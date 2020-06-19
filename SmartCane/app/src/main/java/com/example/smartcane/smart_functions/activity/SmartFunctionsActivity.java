@@ -98,7 +98,6 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
         setContentView(R.layout.activity_smart_functions);
         setupUi();
         setupButtonClicks();
-        startBtService();
     }
 
     @Override
@@ -130,10 +129,14 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
     }
 
     private void startBtService() {
-        if (service != null)
+        if (service != null){
             service.attach(this);
-        else
+            service.detach();
+        }
+        else{
             service = new SerialService();
+            service.detach();
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(new Intent(mContext, SerialService.class));
         } else {
@@ -154,6 +157,7 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
             textToSpeech.stop();
             textToSpeech.shutdown();
         }
+//        stopService(new Intent(mContext, SerialService.class));
     }
 
     private void setupUi() {
@@ -369,6 +373,9 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
 
     private void connect() {
         try {
+            if(service == null){
+                startBtService();
+            }
             BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
             BluetoothDevice device = bluetoothAdapter.getRemoteDevice(deviceAddress);
             String deviceName = device.getName() != null ? device.getName() : device.getAddress();
@@ -385,7 +392,10 @@ public class SmartFunctionsActivity extends BaseActivity implements SerialListen
     private void disconnect() {
         connected = Connected.False;
         service.disconnect();
-        socket.disconnect();
+        if (socket != null) {
+            socket.disconnect();
+        }
+//        stopService(new Intent(mContext, SerialService.class));
         socket = null;
         tv_connection_state.setText(getString(R.string.sf_disconnected_device));
     }
